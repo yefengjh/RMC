@@ -19,9 +19,19 @@ coordinatesPrime = symOp.transformCoordinates(coordinates)
 
 print "Transformed coordinates:", coordinatesPrime
 
+#  three different symmetry operation expressions
+#symOps='206'
+#symOps='I a -3'
+symOps='x,y,z; -y,x-y,z+1/3; -x+y,-x,z+2/3; y,x,-z; x-y,-y,-z+2/3; -x,-x+y,-z+1/3'
 
-symOps = SpaceGroupFactory.subscribedSpaceGroupSymbols(206).getSymmetryOperations()
-
+try:
+    symOps = SpaceGroupFactory.subscribedSpaceGroupSymbols(int(symOps))[0]
+except ValueError:
+    pass
+if SpaceGroupFactory.isSubscribedSymbol(symOps):
+    symOps = SpaceGroupFactory.createSpaceGroup(symOps).getSymmetryOperations()
+else:
+    symOps = SymmetryOperationFactory.createSymOps(symOps)
 print "Number of operations:", len(symOps)
 print "Operations:"
 
